@@ -1,0 +1,81 @@
+import example.*
+
+
+test "el telefono de juliana inicialmente no esta apagado" {
+
+	assert.notThat(juliana.tieneTelefonoApagado())
+}
+
+test "el s21 pierde bateria despues de una llamada" {
+
+	const bateriaInicial = s21.bateria()
+	
+	juliana.llamarA(catalina, 2)
+	
+	assert.that(s21.bateria() < bateriaInicial)
+}
+
+test "juliana tiene el s21 como telefono" {
+	
+	assert.equals(s21, juliana.telefono())
+}
+
+test "despues de un llamado, el iPhone pierde 1% de bateria por minuto" {
+	
+	catalina.llamarA(juliana, 5)
+	
+	assert.equals(4.95, iPhone.bateria())
+}
+
+test "el telefono se queda sin bateria luego de una llamada muy larga" {
+	
+	catalina.llamarA(juliana, 500)
+	
+	assert.that(catalina.tieneTelefonoApagado())
+}
+
+test "el telefono no se queda sin bateria luego de una llamada no tan larga" {
+	
+	catalina.llamarA(juliana, 499)
+	
+	assert.notThat(catalina.tieneTelefonoApagado())
+}
+
+test "juliana no se queda sin bateria en el telefono despues de 19 llamadas" {
+	
+	19.times { numero => 
+		juliana.atenderLlamada(1)
+	}
+	
+	assert.notThat(juliana.tieneTelefonoApagado())
+}
+
+
+test "juliana se queda sin bateria en el telefono despues de 20 llamadas" {
+	
+	20.times { numero =>
+		juliana.atenderLlamada(1)
+	}
+	
+	assert.that(juliana.tieneTelefonoApagado())
+}
+
+test "personal cobra 70 por una llamada de 1 minuto" {
+	assert.equals(70, personal.calcularCosto(1))
+}
+
+test "personal cobra 70 por una llamada de 10 minutos" {
+	assert.equals(70, personal.calcularCosto(10))
+}
+
+test "personal cobra 110 por una llamada de 11 minutos" {
+	assert.equals(110, personal.calcularCosto(11))
+}
+
+
+
+
+
+
+
+
